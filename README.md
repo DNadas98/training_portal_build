@@ -6,4 +6,5 @@
 - Copy `env.txt` and rename to `.env`, modify values
 
 ### Run
+- Run `docker login`
 - Run `docker-compose up -d --build`
