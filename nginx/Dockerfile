@@ -1,4 +1,4 @@
-FROM dnadas98/priv:training_portal_frontend:latest as build_frontend
+FROM dnadas98/priv:training_portal_frontend as build_frontend
 
 FROM nginx:latest
 

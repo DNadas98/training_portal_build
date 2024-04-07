@@ -21,7 +21,7 @@ services:
         max-file: "3"
 
   backend:
-    image: dnadas98/priv:training_portal_backend:latest
+    image: dnadas98/priv:training_portal_backend
     env_file:
       - ./.env
     depends_on:
