@@ -54,9 +54,58 @@ services:
         max-size: "10m"
         max-file: "3"
 
+# logging: ELK stack
+
+#  elasticsearch:
+#    image: elasticsearch:7.16.2
+#    container_name: elasticsearch
+#    restart: always
+#    volumes:
+#    - elastic_data:/usr/share/elasticsearch/data/
+#    environment:
+#      ES_JAVA_OPTS: "-Xmx256m -Xms256m" # restrict mem usage
+#      discovery.type: single-node
+#    ports:
+#    - '9200:9200'
+#    - '9300:9300'
+#    networks:
+#      - elk
+
+#  logstash:
+#    image: logstash:7.16.2
+#    container_name: logstash
+#    restart: always
+#    volumes:
+#    - ./logstash/:/logstash_dir
+#    command: logstash -f /logstash_dir/logstash.conf
+#    depends_on:
+#      - elasticsearch
+#    ports:
+#    - '9600:9600'
+#    environment:
+#      LS_JAVA_OPTS: "-Xmx256m -Xms256m" # restrict mem usage
+#    networks:
+#      - elk
+
+#  kibana:
+#    image: kibana:7.16.2
+#    container_name: kibana
+#    restart: always
+#    ports:
+#    - '5601:5601'
+#    environment:
+#      - ELASTICSEARCH_URL=http://elasticsearch:9200
+#    depends_on:
+#      - elasticsearch
+#    networks:
+#      - elk
+
 networks:
+#  elk:
   backend_network:
     driver: bridge
 
 volumes:
+#  elastic_data:
   db:
+
