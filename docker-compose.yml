@@ -12,7 +12,7 @@ services:
       - db:/data/postgres
       - ./psql/postgresql.conf:/etc/postgresql/postgresql.conf
     networks:
-      - backend_network
+      backend_network: {}
     restart: always
     logging:
       driver: "json-file"
@@ -27,7 +27,7 @@ services:
     depends_on:
       - psql
     networks:
-      - backend_network
+      backend_network: {}
     restart: always
     logging:
       driver: "json-file"
@@ -43,7 +43,7 @@ services:
     depends_on:
       - backend
     networks:
-      - backend_network
+      backend_network: {}
     ports:
       - "80:80"
       - "443:443"
@@ -61,7 +61,7 @@ services:
     ports:
       - "127.0.0.1:9187:9187"
     networks:
-      - backend_network
+      backend_network: {}
     depends_on:
       - psql
     deploy:
@@ -76,7 +76,8 @@ services:
       - "127.0.0.1:9113:9113"
     command: ["--nginx.scrape-uri=http://nginx/nginx_status"]
     networks:
-      - backend_network
+      backend_network:
+        ipv4_address: 172.28.1.3
     depends_on:
       - nginx
     deploy:
@@ -94,7 +95,7 @@ services:
     ports:
       - "127.0.0.1:9090:9090"
     networks:
-      - backend_network
+      backend_network: {}
     depends_on:
       - postgres-exporter
       - nginx-exporter
@@ -118,7 +119,7 @@ services:
     ports:
       - "127.0.0.1:3000:3000"
     networks:
-      - backend_network
+      backend_network: {}
     restart: always
     deploy:
       resources:
@@ -129,6 +130,9 @@ services:
 networks:
   backend_network:
     driver: bridge
+    ipam:
+     config:
+       - subnet: 172.28.0.0/16
 
 volumes:
   db:
