@@ -42,6 +42,8 @@ services:
       dockerfile: nginx/Dockerfile
     depends_on:
       - backend
+    volumes:
+      - "./nging/logs:/var/log/nginx"
     networks:
       backend_network: {}
     ports:
