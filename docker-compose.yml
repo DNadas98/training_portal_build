@@ -42,8 +42,12 @@ services:
       dockerfile: nginx/Dockerfile
     depends_on:
       - backend
+    environment:
+      - DOMAIN
     volumes:
-      - "./nging/logs:/var/log/nginx"
+      - "./nginx/logs:/var/log/nginx"
+      - ./certbot/www/:/var/www/certbot/:ro
+      - ./certbot/conf:/etc/letsencrypt/:ro
     networks:
       backend_network: {}
     ports:
@@ -55,6 +59,19 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
+  certbot:
+    container_name: certbot
+    image: certbot/certbot:latest
+    depends_on:
+      - nginx
+    command: >-
+             certonly  --reinstall --webroot --webroot-path=/var/www/certbot
+             --email ${EMAIL} --agree-tos --no-eff-email
+             -d ${DOMAIN}
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
 
   postgres-exporter:
     image: bitnami/postgres-exporter

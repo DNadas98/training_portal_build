@@ -12,4 +12,5 @@ COPY --chmod=644 --chown=nginx:nginx  ssl/training-portal-cert /etc/nginx/ssl/tr
 COPY --chmod=600 --chown=nginx:nginx  ssl/training-portal-key /etc/nginx/ssl/training-portal.key
 
 # config
-COPY --chown=nginx:nginx --chmod=644 nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --chown=nginx:nginx --chmod=644 nginx/nginx.conf /etc/nginx/templates/default.conf.template
+RUN envsubst '$DOMAIN' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf
