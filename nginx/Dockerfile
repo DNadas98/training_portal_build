@@ -1,4 +1,4 @@
-FROM dnadas98/priv:training_portal_frontend as build_frontend
+FROM tesztsorta/priv:training_portal_frontend_v0_9_0 as build_frontend
 
 FROM nginx:latest
 
@@ -8,7 +8,7 @@ RUN chown -R nginx:nginx /usr/share/nginx/html/frontend
 RUN chmod -R 755 /usr/share/nginx/html/frontend
 
 # ssl
-COPY --chmod=600 --chown=nginx:nginx  ssl/training-portal-cert /etc/nginx/ssl/training-portal.crt
+COPY --chmod=644 --chown=nginx:nginx  ssl/training-portal-cert /etc/nginx/ssl/training-portal.crt
 COPY --chmod=600 --chown=nginx:nginx  ssl/training-portal-key /etc/nginx/ssl/training-portal.key
 
 # config

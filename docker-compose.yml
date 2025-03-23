@@ -21,7 +21,7 @@ services:
         max-file: "3"
 
   backend:
-    image: dnadas98/priv:training_portal_backend
+    image: tesztsorta/priv:training_portal_backend_v0_9_0
     env_file:
       - ./.env
     depends_on:
@@ -47,8 +47,8 @@ services:
     networks:
       backend_network: {}
     ports:
-      - "80:80"
-      - "443:443"
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
     restart: always
     logging:
       driver: "json-file"

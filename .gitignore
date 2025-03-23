@@ -1,4 +1,5 @@
-ssl
+./ssl
+!./ssl/.gitkeep
 
 .idea
 target
