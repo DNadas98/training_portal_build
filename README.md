@@ -16,4 +16,11 @@ crontab -e
 ```
 
 ### Run
+
 - Run `docker-compose up --build -d`
+
+### Modify versions
+
+- Set the frontend version in the first line of `<PROJECT PATH>/nginx/Dockerfile`
+- Set the backend version in `docker-compose.yml`
+
