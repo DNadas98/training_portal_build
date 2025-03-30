@@ -1,0 +1,8 @@
+export DB_NAME=""
+export DB_USERNAME=""
+export BACKUP_DIR=""
+
+export REMOTE_USER=""
+export REMOTE_HOST=""
+export REMOTE_DIR=""
+export LOCAL_TMP_DIR=""

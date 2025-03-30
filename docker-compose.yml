@@ -1,7 +1,7 @@
 services:
   psql:
     container_name: postgres
-    image: postgres
+    image: postgres:17.4
     command: -c 'config_file=/etc/postgresql/postgresql.conf'
     environment:
       POSTGRES_DB: ${DB_NAME}
@@ -45,7 +45,10 @@ services:
     environment:
       - DOMAIN
     volumes:
-      - "./nginx/logs:/var/log/nginx"
+#      - "./nginx/logs:/var/log/nginx"
+      - "./ssl/training-portal-cert:/etc/nginx/ssl/training-portal.crt"
+      - "./ssl/training-portal-key:/etc/nginx/ssl/training-portal.key"
+
     networks:
       backend_network: {}
     ports:
@@ -59,7 +62,7 @@ services:
         max-file: "3"
 
   postgres-exporter:
-    image: bitnami/postgres-exporter
+    image: bitnami/postgres-exporter:0.17.1
     environment:
       DATA_SOURCE_NAME: ${PROMETHEUS_POSTGRES_EXPORTER_DB_CONNECTION_STRING}
     ports:
@@ -73,9 +76,14 @@ services:
         limits:
           cpus: '0.50'
           memory: 100M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   nginx-exporter:
-    image: nginx/nginx-prometheus-exporter
+    image: nginx/nginx-prometheus-exporter:1.4
     ports:
       - "127.0.0.1:9113:9113"
     command: ["--nginx.scrape-uri=http://nginx/nginx_status"]
@@ -89,10 +97,15 @@ services:
         limits:
           cpus: '0.50'
           memory: 100M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   prometheus:
     container_name: prometheus
-    image: prom/prometheus
+    image: prom/prometheus:v3.2.1
     volumes:
       - ./prometheus:/etc/prometheus
       - prometheus_data:/prometheus
@@ -109,10 +122,15 @@ services:
         limits:
           cpus: '0.50'
           memory: 100M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   grafana:
     container_name: grafana
-    image: grafana/grafana
+    image: grafana/grafana:11.6.0
     volumes:
       - grafana_data:/var/lib/grafana
     environment:
@@ -127,6 +145,11 @@ services:
     restart: always
     deploy:
       resources:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
         limits:
           cpus: '0.50'
           memory: 100M
