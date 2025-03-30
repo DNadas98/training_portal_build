@@ -2,17 +2,13 @@
 
 ### Setup
 
-- Copy `env.txt` and rename to `.env`, modify values
+- Copy `env.txt` and rename to `.env`, copy `env_backup.txt` and rename to `.env.backup` modify values
 - Run `docker login`
-
-- Run ./certbot.sh <EMAIL> <DOMAIN>
-- Add ./certbot-renev.sh to crontab:
+- Add to crontab:
 
 ```bash
 # Copy this line:
-0 3 * * * /bin/bash <PROJECT PATH>/certbot-renew.sh > /dev/null 2>> <PROJECT PATH>/certbot-renew.log
-#Paste and save in crontab:
-crontab -e
+*/30 * * * * /home/tesztsor/training_portal_build/db_backup.sh > /var/tesztsor_backup/backup.log 2>&1
 ```
 
 ### Run
